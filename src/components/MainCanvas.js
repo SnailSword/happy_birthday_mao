@@ -33,7 +33,7 @@ export default class Home extends React.Component {
         let pointer = this.canvas.getPointer(event.e);
         let posX = pointer.x;
         let posY = pointer.y;
-
+        // console.log(posX, posY);
         if (posX >= 0 && posY >= 0 && this.pressed) {
             this.coords.push(pointer)
         }
@@ -55,19 +55,23 @@ export default class Home extends React.Component {
         }
         let canvas = new fabric.Canvas(this.id);
         this.canvas = canvas;
+        // this.cxt = document.getContext('2d');
+        // console.log('this.canvas', this.canvas);
         canvas.backgroundColor = '#ffffff';
         canvas.isDrawingMode = 1;
         canvas.freeDrawingBrush.color = "black";
         canvas.freeDrawingBrush.width = getBrushSize(2);
         canvas.renderAll();
-        canvas.on('mouse:up', () => {
+        canvas.on('mouse:up', e => {
             // this.getFrame();
             // mousePressed = false
-            let prob = checkPrinting(this.canvas, this.coords, this.key);
-            this.pressed = false;
-            if (this.props.onChange) {
-                this.props.onChange(prob);
-            }
+            setTimeout(() => {
+                let prob = checkPrinting(this.canvas, this.coords, this.key);
+                this.pressed = false;
+                if (this.props.onChange) {
+                    this.props.onChange(prob);
+                }
+            }, 0);
         });
         canvas.on('mouse:down', e => {
             this.pressed = true;
@@ -100,6 +104,7 @@ export default class Home extends React.Component {
             <wired-button onClick={this.onClear}>清空</wired-button>
             <WingBlank>
             <BrushSizePicker counts={5} initValue={2} onChange={this.onBrushSizeChange}></BrushSizePicker>
+            {/* <canvas id="aaa" width="900" height="900"></canvas> */}
 
             </WingBlank>
         </Fragment>

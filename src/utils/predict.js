@@ -19,12 +19,12 @@ const preprocess = imgData => {
     })
 }
 
-export const getPrediction = (canvas, coords) => {
+export const getPrediction = (canvas, coords, key) => {
     //make sure we have at least two recorded coordinates
     if (coords.length >= 2) {
 
         //get the image data from the canvas
-        const imgData = getImageData(canvas, coords)
+        const imgData = getImageData(canvas, coords, key)
 
         //get the prediction
         const pred = model.predict(preprocess(imgData)).dataSync()
@@ -49,15 +49,17 @@ const getMinBox = coords => {
     var coorY = coords.map(function(p) {
         return p.y
     });
-
+    const buffer = 20;
+    const min = m => (m - buffer) > 0 ? (m - buffer) : 0;
+    const max = m => (m + buffer) > 300 ? 300 : (m + buffer);
     //find top left and bottom right corners
     var min_coords = {
-        x: Math.min.apply(null, coorX),
-        y: Math.min.apply(null, coorY)
+        x: min(Math.min(...coorX)),
+        y: min(Math.min(...coorY))
     }
     var max_coords = {
-        x: Math.max.apply(null, coorX),
-        y: Math.max.apply(null, coorY)
+        x: max(Math.max(...coorX)),
+        y: max(Math.max(...coorY))
     }
     //return as strucut
     return {
@@ -66,22 +68,40 @@ const getMinBox = coords => {
     }
 }
 
-function getImageData(canvas, coords) {
+function getImageData(canvas, coords, key) {
     //get the minimum bounding box around the drawing
     const mbb = getMinBox(coords);
 
     //get image data according to dpi
     const dpi = window.devicePixelRatio;
-    // console.log(mbb.max.x * dpi, mbb.max.y * dpi);
     // const imgData = canvas.contextContainer.getImageData(0,0,300,300);
     const imgData = canvas.contextContainer.getImageData(mbb.min.x * dpi, mbb.min.y * dpi,
                                                   (mbb.max.x - mbb.min.x) * dpi, (mbb.max.y - mbb.min.y) * dpi);
-
+        // window.resultStore[key] = this.canvas.toDataURL({
+        //     format: 'png',
+        //     multiplier: 0.2
+        // });
+        window.resultStore[key] = canvas.toSVG({
+            viewBox: {
+              x: mbb.min.x,
+              y: mbb.min.y,
+              width: mbb.max.x - mbb.min.x,
+              height: mbb.max.y - mbb.min.y
+            },
+            width: 50,
+            height: 50
+        });
+    // console.log('imgData', imgData);
+    // canvas.clear();
+    // let a = document.getElementById('aaa').getContext("2d");
+    // a.fillStyle="#333";
+    // a.fillRect(0,0,300,300);
+    // a.putImageData(imgData,0,0);
     return imgData;
 }
 
 export const checkPrinting = (canvas, coords, key) => {
-    const res = getPrediction(canvas, coords);
+    const res = getPrediction(canvas, coords, key);
     let keyIndex = classNames.indexOf(key);
     console.log(keyIndex, key, res[keyIndex]);
     return res[keyIndex];

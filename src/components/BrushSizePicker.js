@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import {WingBlank, Slider, Drawer} from 'antd-mobile';
 import rough from 'roughjs/bundled/rough.esm';
 
-console.log(rough);
-
 class SingleRoughCircle extends React.Component {
 
     componentDidMount() {

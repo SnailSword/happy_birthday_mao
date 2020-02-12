@@ -6,16 +6,18 @@ import { WiredButton, WiredInput } from "wired-elements"
 import Navigation from './components/Navigation'
 import Home from './routes/Home'
 import Game from './routes/Game'
+import Result from './routes/Result'
 import About from './routes/About'
 import Sample from './routes/Sample'
 
 export const App = () => (
   <Fragment>
     <Router history={createBrowserHistory()}>
-      <Navigation />
+      {/* <Navigation /> */}
       <Switch>
         <Route exact path="/" component={Home}/>
         <Route path="/game" component={Game}/>
+        <Route path="/result" component={Result}/>
       </Switch>
     </Router>
   </Fragment>

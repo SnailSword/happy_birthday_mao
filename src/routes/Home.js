@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import * as tf from '@tensorflow/tfjs';
+import {Toast} from 'antd-mobile';
 
 export default class Home extends React.Component {
     state = {
@@ -22,13 +23,23 @@ export default class Home extends React.Component {
         if (!window.model) {
             this.loadModel();
         }
+        window.resultStore = {};
+    }
+
+    startGame = () => {
+        this.props.history.push('/game');
     }
 
     render() {
         const {modelLoaded} = this.state;
         return <Fragment>
             <h1>你画你猜</h1>
-            <h1>{modelLoaded ? '加载好了' : '加载中'}</h1>
+            {/* <h1>{modelLoaded ? '加载好了' : '加载中'}</h1> */}
+            {
+                modelLoaded
+                ? <wired-button onClick={this.startGame}>开始游戏</wired-button>
+                : <wired-button disabled>等一下再开始游戏</wired-button>
+            }
         </Fragment>
     }
 }
