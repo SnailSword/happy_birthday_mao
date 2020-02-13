@@ -15,9 +15,9 @@ export const App = () => (
     <Router history={createBrowserHistory()}>
       {/* <Navigation /> */}
       <Switch>
-        <Route exact path="/" component={Home}/>
-        <Route path="/game" component={Game}/>
-        <Route path="/result" component={Result}/>
+        <Route exact path="/happy_birthday_mao/" component={Home}/>
+        <Route path="/happy_birthday_mao/game" component={Game}/>
+        <Route path="/happy_birthday_mao/result" component={Result}/>
       </Switch>
     </Router>
   </Fragment>

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import {fabric} from 'fabric';
-import {WingBlank} from 'antd-mobile';
+import {WingBlank, Flex} from 'antd-mobile';
 
 import {checkPrinting} from '@/utils/predict';
 import BrushSizePicker from './BrushSizePicker';
@@ -71,7 +71,7 @@ export default class Home extends React.Component {
                 if (this.props.onChange) {
                     this.props.onChange(prob);
                 }
-            }, 0);
+            }, 200);
         });
         canvas.on('mouse:down', e => {
             this.pressed = true;
@@ -92,20 +92,26 @@ export default class Home extends React.Component {
         this.coords = [];
         this.canvas.clear();
         this.canvas.backgroundColor = '#ffffff';
+        if (this.props.onChange) {
+            this.props.onChange(0);
+        }
     }
 
     render() {
         return <Fragment>
-            <WingBlank>
+            <WingBlank size="lg">
                 <wired-card>
                     <canvas id={this.id} width="300" height="300"></canvas>
                 </wired-card>
             </WingBlank>
-            <wired-button onClick={this.onClear}>清空</wired-button>
-            <WingBlank>
-            <BrushSizePicker counts={5} initValue={2} onChange={this.onBrushSizeChange}></BrushSizePicker>
-            {/* <canvas id="aaa" width="900" height="900"></canvas> */}
-
+            <WingBlank size="lg">
+                <div className="tools-container">
+                    <div className="brushsize-picker-container">
+                        <BrushSizePicker counts={5} initValue={2} onChange={this.onBrushSizeChange}></BrushSizePicker>
+                    </div>
+                    <wired-button onClick={this.onClear}>清空</wired-button>
+                </div>
+            {/* <canvas id="aaa" width="1900" height="1900"></canvas> */}
             </WingBlank>
         </Fragment>
     }

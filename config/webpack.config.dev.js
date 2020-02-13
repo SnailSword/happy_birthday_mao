@@ -3,7 +3,7 @@ const config = require('./webpack.config.js')
 
 config.devServer = {
   historyApiFallback: true,
-  contentBase: path.join(__dirname, '../build'),
+  contentBase: path.join(__dirname, '../happy_birthday_mao'),
   port: 8081
 }
 

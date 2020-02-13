@@ -8,9 +8,9 @@ const SRC_DIRECTORY = path.join(ROOT_DIRECTORY, 'src')
 const config = {
   entry: [path.resolve(__dirname, '../src/index.js')],
   output: {
-    path: path.resolve(__dirname, '../build'),
+    path: path.resolve(__dirname, '../happy_birthday_mao'),
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/happy_birthday_mao/'
   },
   mode: 'development',
   resolve: {
@@ -27,12 +27,14 @@ const config = {
       template: path.join(SRC_DIRECTORY, 'index.html')
     }),
     new CopyWebpackPlugin([
-      { from: path.join(SRC_DIRECTORY, 'assets'), to: path.join(ROOT_DIRECTORY, 'build') }
+      { from: path.join(SRC_DIRECTORY, 'assets'), to: path.join(ROOT_DIRECTORY, 'happy_birthday_mao') }
     ])
   ],
   module: {
     rules: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+      { test: /\.js$/,
+        // exclude: /node_modules/,
+        loader: 'babel-loader' },
       {
         test: /\.(scss|css)$/,
         use: [
@@ -48,7 +50,7 @@ const config = {
         ]
       },
       {
-        test: /assets\/model/,
+        test: /assets\/(model)/,
         use: [
           'file-loader'
         ]

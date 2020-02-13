@@ -95,7 +95,7 @@ function getImageData(canvas, coords, key) {
     // canvas.clear();
     // let a = document.getElementById('aaa').getContext("2d");
     // a.fillStyle="#333";
-    // a.fillRect(0,0,300,300);
+    // a.fillRect(0,0,900,900);
     // a.putImageData(imgData,0,0);
     return imgData;
 }
